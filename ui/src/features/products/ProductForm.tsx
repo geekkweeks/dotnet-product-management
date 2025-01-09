@@ -20,7 +20,6 @@ interface ProductFormProps {
 }
 
 function ProductForm({ onProductAdded, initialValues }: ProductFormProps) {
-  console.log("🚀 ~ ProductForm ~ initialValues:", initialValues);
   const [form] = Form.useForm();
   const isEdit = !!initialValues?.id;
 
@@ -29,7 +28,6 @@ function ProductForm({ onProductAdded, initialValues }: ProductFormProps) {
   };
 
   const onFinish = async (request: ProductRequest) => {
-    console.log("🚀 ~ onFinish ~ request:", request);
     try {
       if (isEdit) {
         request.id = initialValues?.id; // set the id for edit

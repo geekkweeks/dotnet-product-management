@@ -14,6 +14,7 @@ import {
 import { EditOutlined } from "@ant-design/icons";
 import { IoTrashBinOutline } from "react-icons/io5";
 import {
+  deleteProductAsync,
   getProductByIdAsync,
   getProductsAsync,
 } from "../../services/product-service";
@@ -62,8 +63,6 @@ function ProductTable() {
           <Popconfirm
             title="Delete the task"
             description="Are you sure to delete this item?"
-            // onConfirm={confirm}
-            // onCancel={cancel}
             okText="Yes"
             cancelText="No"
           >
@@ -71,7 +70,7 @@ function ProductTable() {
               type="primary"
               icon={<IoTrashBinOutline />}
               danger
-              onClick={() => console.log(record?.name)}
+              onClick={() => handleDelete(record?.id as number)}
             >
               Delete
             </Button>
@@ -83,15 +82,23 @@ function ProductTable() {
 
   const handleEdit = async (id: number) => {
     const product = await getProductByIdAsync(id);
-    console.log("🚀 ~ handleEdit ~ product:", product);
     setEditingProduct(product);
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteProductAsync(id);
+      await fetchProducts();
+      message.success("Product has been deleted successfully");
+    } catch (error: any) {
+      const errorDetails = error.errors.join(". ");
+      message.error(`Failed to delete products: ${errorDetails}`);
+    }
   };
 
   const fetchProducts = async () => {
     try {
-      console.log("hei");
       const productResponse = await getProductsAsync(filter);
-      console.log("🚀 ~ productResponse ~ productResponse:", productResponse);
       setProducts(productResponse);
     } catch (error: any) {
       const errorDetails = error.errors.join(". ");
@@ -117,15 +124,13 @@ function ProductTable() {
         filter.endPrice &&
         filter.startPrice > filter.endPrice
       ) {
-        console.log("🚀 ~ onFinish ~ filter.endPrice:", filter.endPrice);
         message.error("Start Price should not be greater than End Price");
         return;
         // if (filter.startPrice > filter.endPrice) {
 
         // }
       }
-      console.log("🚀 ~ onFinish ~ filter:", filter);
-        await fetchProducts();
+      await fetchProducts();
     } catch (error: any) {
       const errorDetails = error.errors.join(". ");
       message.error(`Failed to add time slot: ${errorDetails}`);

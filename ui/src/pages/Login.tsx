@@ -1,5 +1,15 @@
 import { useState } from "react";
-import { Button, Card, Col, Flex, Form, Input, Row, Space } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Flex,
+  Form,
+  Input,
+  message,
+  Row,
+  Space,
+} from "antd";
 import {
   LockOutlined,
   ShareAltOutlined,
@@ -35,9 +45,8 @@ function Login() {
       await loginAsync(request);
       navigate("/dashboard", { replace: true });
     } catch (error: any) {
-      console.log("🚀 ~ handleSubmit ~ error:", error);
       const errorDetails = error.errors.join(". ");
-      console.log("🚀 ~ handleSubmit ~ errorDetails:", errorDetails);
+      message.error("🚀 ~ handleSubmit ~ errorDetails:", errorDetails);
     }
   }
   return (

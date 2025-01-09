@@ -4,7 +4,6 @@ import { ProductFilter, ProductRequest } from "../types/product";
 const ProductEndpoint = "Products";
 
 export const getProductsAsync = async (filter: ProductFilter) => {
-  console.log("🚀 ~ getProductsAsync ~ filter:", filter);
   const response = await ApiService.post<ProductResponse[]>(
     `${ProductEndpoint}/get-all`,
     filter
@@ -18,7 +17,6 @@ export const getProductByIdAsync = async (id: number) => {
   return response.data;
 };
 
-
 export const putProductAsync = async (id: number, request: ProductRequest) => {
   const response = await ApiService.put<ProductResponse>(
     `${ProductEndpoint}/${id}`,
@@ -29,4 +27,8 @@ export const putProductAsync = async (id: number, request: ProductRequest) => {
 
 export const postProductAsync = async (request: ProductRequest) => {
   await ApiService.post<ProductResponse>(`${ProductEndpoint}`, request);
+};
+
+export const deleteProductAsync = async (id: number) => {
+  await ApiService.delete<ProductResponse>(`${ProductEndpoint}/${id}`);
 };
