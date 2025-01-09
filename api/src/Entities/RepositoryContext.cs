@@ -11,6 +11,6 @@ public class RepositoryContext : DbContext
     {
     }
 
-    public DbSet<Product> Users { get; set; }
+    public DbSet<Product> Products { get; set; }
 
 }
