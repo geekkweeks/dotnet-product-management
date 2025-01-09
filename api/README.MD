@@ -20,3 +20,5 @@
    dotnet run --project src/ProductManagement.Api
 
 8. Access the Application: Once the application is running, you can access it in your browser at the URL specified in the launchSettings.json file, typically http://localhost:5172 or https://localhost:7262
+
+9. For login, kindly refer to Appsetting.json -> AdminUser
